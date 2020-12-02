@@ -6,6 +6,7 @@ import {
   checkImageURL,
 } from "./util/util";
 import e from "express";
+import { pathToFileURL } from "url";
 
 (async () => {
   // Init the Express application
@@ -45,6 +46,11 @@ import e from "express";
 
     res.status(200).sendFile(filteredImage, (err) => {
       if (err) res.status(500).send("Internal Server error");
+
+      // get directory path
+      // delete the folder
+      let path = __dirname + "/util/tmp";
+      console.log(path);
     });
   });
 

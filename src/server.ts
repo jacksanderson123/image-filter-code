@@ -1,6 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { filterImageFromURL, deleteLocalFiles } from "./util/util";
+import {
+  filterImageFromURL,
+  deleteLocalFiles,
+  checkImageURL,
+} from "./util/util";
+import e from "express";
 
 (async () => {
   // Init the Express application
@@ -16,7 +21,6 @@ import { filterImageFromURL, deleteLocalFiles } from "./util/util";
   // GET /filteredimage?image_url={{URL}}
   // endpoint to filter an image from a public url.
   // IT SHOULD
-  //    1
   //    1. validate the image_url query
   //    2. call filterImageFromURL(image_url) to filter the image
   //    3. send the resulting file in the response
@@ -30,8 +34,16 @@ import { filterImageFromURL, deleteLocalFiles } from "./util/util";
 
   //! END @TODO1
   app.get("/filteredimage", function (req, res) {
-    let url = req.query.image_url;
-    res.send("id: " + url);
+    let imageURL = req.query.image_url;
+
+    if (!checkImageURL(imageURL))
+      res.status(400).send({ message: "Invalid url supplied" });
+
+    let filteredImage = filterImageFromURL(imageURL);
+
+    res.status(200).sendFile(filteredImage, (err) => {
+      if (err) res.status(500).send({ message: "Internal Server error" });
+    });
   });
 
   // Root Endpoint

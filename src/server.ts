@@ -6,7 +6,8 @@ import {
   checkImageURL,
 } from "./util/util";
 import e from "express";
-import { pathToFileURL } from "url";
+import path from "path";
+import fs from "fs";
 
 (async () => {
   // Init the Express application
@@ -49,8 +50,12 @@ import { pathToFileURL } from "url";
 
       // get directory path
       // delete the folder
-      let path = __dirname + "/util/tmp";
-      console.log(path);
+      let imagePath = path.join(__dirname, "/util/tmp");
+
+      fs.readdir(imagePath, function (err, files) {
+        if (err) res.status(500).send("Internal Server error");
+        deleteLocalFiles(files.map((file) => imagePath + "/" + file));
+      });
     });
   });
 

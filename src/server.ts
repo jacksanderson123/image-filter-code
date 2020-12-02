@@ -33,21 +33,24 @@ import e from "express";
   /**************************************************************************** */
 
   //! END @TODO1
-  app.get("/filteredimage", function (req, res) {
+  // Tested with https://random.dog/b5cb2902-8c8b-4c0b-ac88-ee301aee91eb.jpg
+  app.get("/filteredimage", async function (req, res) {
     let imageURL = req.query.image_url;
+    console.log(imageURL);
 
-    if (!checkImageURL(imageURL))
-      res.status(400).send({ message: "Invalid url supplied" });
+    if (!checkImageURL(imageURL)) res.status(400).send("Invalid url supplied");
 
-    let filteredImage = filterImageFromURL(imageURL);
+    let filteredImage = await filterImageFromURL(imageURL);
+    console.log(filteredImage);
 
     res.status(200).sendFile(filteredImage, (err) => {
-      if (err) res.status(500).send({ message: "Internal Server error" });
+      if (err) res.status(500).send("Internal Server error");
     });
   });
 
   // Root Endpoint
   // Displays a simple message to the user
+
   app.get("/", async (req, res) => {
     res.send("try GET /filteredimage?image_url={{}}");
   });

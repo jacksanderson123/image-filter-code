@@ -23,6 +23,7 @@ const fs_1 = __importDefault(require("fs"));
     const port = process.env.PORT || 8082;
     // Use the body parser middleware for post requests
     app.use(body_parser_1.default.json());
+<<<<<<< HEAD
     // Tested with https://random.dog/b5cb2902-8c8b-4c0b-ac88-ee301aee91eb.jpg
     app.get("/filteredimage", function (req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -32,6 +33,16 @@ const fs_1 = __importDefault(require("fs"));
                 res.status(400).send("Invalid url supplied");
             let filteredImage = yield util_1.filterImageFromURL(imageURL);
             console.log(filteredImage);
+=======
+    //! END @TODO1
+    app.get("/filteredimage", function (req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.query.image_url);
+            let imageURL = req.query.image_url;
+            if (!util_1.checkImageURL(imageURL))
+                res.status(400).send("Invalid url supplied");
+            let filteredImage = yield util_1.filterImageFromURL(imageURL);
+>>>>>>> dev
             res.status(200).sendFile(filteredImage, (err) => {
                 if (err)
                     res.status(500).send("Internal Server error");

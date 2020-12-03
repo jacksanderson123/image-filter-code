@@ -15,6 +15,6 @@ Follow the process described in the course to `eb init` a new application and `e
 
 If you're feeling up to it, refactor the course RESTapi to make a request to your newly provisioned image server.
 
-### Example endpoint
+### Example URL
 
-http://udagram-jack-dev-dev.eu-west-2.elasticbeanstalk.com/filteredimage?image_url=https://upload.wikimedia.org/wikipedia/commons/b/bd/
+http://udagram-jack-dev-dev.eu-west-2.elasticbeanstalk.com/filteredimage?image_url=https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg
